@@ -1,12 +1,12 @@
 rm(list = ls())
 
-#CALL PACKAGES (INSTALL THEM BEFORE)
-install.packages(c("quantmod", "PerformanceAnalytics", "PortfolioAnalytics", "ROI.plugin.glpk", "Rglpk", "ROI.plugin.quadprog", "ROI", "quadprog", "fPortfolio","skedastic", "ggplot2"))
+#install.packages(c("quantmod", "PerformanceAnalytics", "PortfolioAnalytics", "ROI.plugin.glpk", "Rglpk", "ROI.plugin.quadprog", "ROI", "quadprog", "fPortfolio","skedastic", "ggplot2"))
 
 lapply(c("car", "lmtest", "sandwich", "tseries", "quantmod", "PortfolioAnalytics", "ROI.plugin.quadprog", "zoo", "magrittr", "fPortfolio","skedastic", "ggplot2"), library, character.only = TRUE)
 
 #symbols <- c("DSV.CO", "MAERSK-A.CO", "MAERSK-B.CO", "GMAB.CO", "NETC.CO", "NOVO-B.CO", "CHR.CO", "AMBU-B.CO", "ISS.CO", "DANSKE.CO", "FLS.CO")
 
+# Stocks
 symbols <- c("NVDA", "NOVO-B.CO", "GOOGL", "RYAAY", "AAPL", "ADBE", "AMD", "QCOM", "PG", "WMT", "LMT", "RTX", "T", "TSLA")
 
 stockPrices <- NULL
@@ -17,7 +17,7 @@ for (ticker in symbols) {
   )
 }
 
-# Calculating the log returns for each stock for the portfolios
+# Log returns
 stockReturns <- na.omit(diff(log(stockPrices)))
 head(stockReturns)
 
@@ -29,11 +29,10 @@ head(stockReturns)
   portf <- add.objective(portf, type = "return", name = "mean")
   portf <- add.objective(portf, type = "risk", name = "StdDev")
   optPort <- optimize.portfolio(stockReturns, portf, optimize_method = "quadprog", maxSR=TRUE, trace=TRUE)
-  # Printing the optimized long portfolio
   print(optPort)
 }
 
-# Calculating the Sharpe Ratio
+# Sharpe Ratio
 {
   weights <- extractWeights(optPort)
   portReturn <- sum(weights * colMeans(stockReturns))
@@ -43,6 +42,7 @@ head(stockReturns)
   cat("\nSharpe Ratio: ", sharpeRatio, "\n")
 }
 
+# Plotting the weights
 {
   weights_df <- data.frame(weights)
   weights_df$stocks <- colnames(stockReturns)
