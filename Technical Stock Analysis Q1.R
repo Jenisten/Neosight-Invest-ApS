@@ -4,8 +4,6 @@ rm(list = ls())
 
 lapply(c("car", "lmtest", "sandwich", "tseries", "quantmod", "PortfolioAnalytics", "ROI.plugin.quadprog", "zoo", "magrittr", "fPortfolio","skedastic", "ggplot2"), library, character.only = TRUE)
 
-#symbols <- c("DSV.CO", "MAERSK-A.CO", "MAERSK-B.CO", "GMAB.CO", "NETC.CO", "NOVO-B.CO", "CHR.CO", "AMBU-B.CO", "ISS.CO", "DANSKE.CO", "FLS.CO")
-
 # Stocks
 symbols <- c("NVDA", "NOVO-B.CO", "GOOGL", "RYAAY", "AAPL", "ADBE", "AMD", "QCOM", "PG", "WMT", "LMT", "RTX", "T", "TSLA")
 
