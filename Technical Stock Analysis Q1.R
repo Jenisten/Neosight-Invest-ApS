@@ -11,7 +11,7 @@ stockPrices <- NULL
 for (ticker in symbols) {
   stockPrices <- cbind(
     stockPrices,
-    getSymbols.yahoo(ticker, from = "2018-06-07", to = "2021-12-31", periodicity = "daily", auto.assign = FALSE)[, 4]
+    getSymbols.yahoo(ticker, from = "2017-12-31", to = "2023-12-31", periodicity = "daily", auto.assign = FALSE)[, 4]
   )
 }
 
@@ -23,7 +23,7 @@ head(stockReturns)
 {
   portf <- portfolio.spec(colnames(stockReturns))
   portf <- add.constraint(portf, type="weight_sum", min_sum=1, max_sum=1)
-  portf <- add.constraint(portf, type="box", min=, max=)
+  portf <- add.constraint(portf, type="box", min=0, max=.25)
   portf <- add.objective(portf, type = "return", name = "mean")
   portf <- add.objective(portf, type = "risk", name = "StdDev")
   optPort <- optimize.portfolio(stockReturns, portf, optimize_method = "quadprog", maxSR=TRUE, trace=TRUE)
